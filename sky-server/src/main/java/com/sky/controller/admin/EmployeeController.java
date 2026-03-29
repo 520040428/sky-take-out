@@ -14,6 +14,7 @@ import com.sky.vo.EmployeeLoginVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -104,5 +105,22 @@ public class EmployeeController {
         PageResult pageResult = employeeService.pageQuery(employeePageQueryDTO);
 
         return Result.success(pageResult);
+    }
+
+
+    /**
+     * 启用禁用员工账号
+     * @param status
+     * @param id
+     * @return
+     */
+    @PostMapping("/status/{status}")
+    @ApiOperation("启用禁用员工账号")
+    //我们设计的时候一定要考虑到我们实体类中的类型是什么，形参类型保持一致
+    public Result startOrStop(@PathVariable("status") Integer status, Long id){
+
+        log.info("启用禁用员工账号:{},{}", status, id);
+        employeeService.startOrStop(status, id);
+        return Result.success();
     }
 }
