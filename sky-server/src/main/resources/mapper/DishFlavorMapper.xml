@@ -4,11 +4,19 @@
 <mapper namespace="com.sky.mapper.DishFlavorMapper">
 
 <!--这里的collection指的是集合，item是遍历出来的对象，separator指的是每个对象后用"."分隔开-->
-    <insert id="insertBath">
+    <insert id="insertBatch">
         insert into dish_flavor (dish_id, name, value)
         values
         <foreach collection="flavors" item="df" separator=",">
             (#{df.dishId}, #{df.name}, #{df.value})
         </foreach>
     </insert>
+
+    <delete id="delteteByDishIds">
+        delete from dish_flavor where dish_id in
+        <foreach collection="dishIds" item="dishId" separator="," open="(" close=")">
+            #{dishId}
+        </foreach>
+    </delete>
+
 </mapper>

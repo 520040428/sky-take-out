@@ -63,7 +63,7 @@ public class DishServiceImpl implements DishService {
                 flavor.setDishId(dishId);
             });
             //向口味表插入n条数据
-            dishFlavorMapper.insertBath(flavors);
+            dishFlavorMapper.insertBatch(flavors);
         }
     }
 
@@ -103,11 +103,67 @@ public class DishServiceImpl implements DishService {
         }
 
         //3.删除菜品表中的菜品数据
-        for (Long id : ids) {
-            dishMapper.deleteById(id);
+//        for (Long id : ids) {
+//            dishMapper.deleteById(id);
+//
+//            //4.删除菜品关联的口味数据
+//            dishFlavorMapper.deleteByDishId(id);
+//        }
 
-            //4.删除菜品关联的口味数据
-            dishFlavorMapper.deleteByDishId(id);
+        //下面代码对上述代码做一个优化，上述的sql语句过于多
+        //根据菜品id集合批量删除菜品数据
+        dishMapper.deleteByIds(ids);
+
+        //根据菜品id集合批量删除关联的口味数据
+        dishFlavorMapper.delteteByDishIds(ids);
+    }
+
+    /**
+     * 根据id修改菜品基本信息和对应的口味信息
+     * @param dishDTO
+     */
+    @Override
+    public void updateWithFlavor(DishDTO dishDTO) {
+        Dish dish = new Dish();
+        BeanUtils.copyProperties(dishDTO, dish);
+
+        //1.修改菜品表基本信息
+        dishMapper.update(dish);
+
+        //2.删除原有的口味数据
+        dishFlavorMapper.deleteByDishId(dishDTO.getId());
+
+        //3.重新插入口味数据
+        List<DishFlavor> flavors = dishDTO.getFlavors();
+
+        //判断口味数据是否为空,并且这个口味数据为新增的时候需要设置dish_flavor中的dish_id字段
+        if(flavors != null && flavors.size() > 0){
+            flavors.forEach(flavor -> {
+                flavor.setDishId(dishDTO.getId());
+            });
+            //向口味表插入n条数据
+            dishFlavorMapper.insertBatch(flavors);
         }
+    }
+
+    /**
+     * 根据id查询菜品
+     * @param id
+     * @return
+     */
+    @Override
+    public DishVO getByIdWithFlavor(Long id) {
+        //根据id查询菜品数据
+        Dish dish = dishMapper.getById(id);
+
+        //根据dish_id查询口味数据
+        List<DishFlavor> dishFlavors = dishFlavorMapper.getByDishId(id);
+
+        //将查询到的数据封装到VO
+        DishVO dishVO = new DishVO();
+        BeanUtils.copyProperties(dish, dishVO);
+        dishVO.setFlavors(dishFlavors);
+
+        return dishVO;
     }
 }
