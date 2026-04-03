@@ -4,4 +4,10 @@
 *.class
 *Test.java
 **/test/
+
+.env
+.env.local
+.env.*.local
+
+
 **/application-dev.yml
