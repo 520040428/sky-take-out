@@ -3,6 +3,8 @@ package com.sky;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.core.env.Environment;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @SpringBootApplication
@@ -10,7 +12,14 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Slf4j
 public class SkyApplication {
     public static void main(String[] args) {
-        SpringApplication.run(SkyApplication.class, args);
-        log.info("server started");
+        ConfigurableApplicationContext context = SpringApplication.run(SkyApplication.class, args);
+//        log.info("server started");
+//
+//        Environment env = context.getEnvironment();
+//
+//        log.info("=== Redis 配置 ===");
+//        log.info("Host: " + env.getProperty("spring.redis.host"));
+//        log.info("Port: " + env.getProperty("spring.redis.port"));
+//        log.info("Password: " + (env.getProperty("spring.redis.password") != null ? "已配置" : "未配置"));
     }
 }
