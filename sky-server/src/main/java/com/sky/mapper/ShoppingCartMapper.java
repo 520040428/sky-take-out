@@ -36,7 +36,7 @@ public interface ShoppingCartMapper {
      * 添加商品到购物车
      * @param shoppingCart
      */
-    @Insert("insert into shopping_cart (user_id, dish_id, dish_flavor, number, create_time)" +
-            "values(#{name}, #{userId}. #{dishId}, #{setmealId}, #{dishFlavor}, #{number}, #{amount}, #{image}, #{createTime})")
+    @Insert("insert into shopping_cart (name, user_id, dish_id, setmeal_id, dish_flavor, number, amount, image, create_time)" +
+            "values(#{name}, #{userId}, #{dishId}, #{setmealId}, #{dishFlavor}, #{number}, #{amount}, #{image}, #{createTime})")
     void insert(ShoppingCart shoppingCart);
 }
