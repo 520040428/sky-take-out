@@ -4,6 +4,10 @@ import com.sky.annotation.AutoFill;
 import com.sky.entity.Orders;
 import com.sky.enumeration.OperationType;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
+
+import java.time.LocalDateTime;
 
 /**
  * @author Jing Beier
@@ -19,6 +23,27 @@ public interface OrderMapper {
      * 插入订单数据
      * @param orders
      */
-
     void insert(Orders orders);
+
+    /**
+     * 根据订单号查询订单
+     * @param orderNumber
+     */
+    @Select("select * from orders where number = #{orderNumber}")
+    Orders getByNumber(String orderNumber);
+
+    /**
+     * 修改订单信息
+     * @param orders
+     */
+    void update(Orders orders);
+
+    /**
+     * 跳过微信支付直接修改数据库订单信息
+     * @param orders:
+     * @return void
+     */
+    @Update("update orders set pay_status = #{payStatus}, status = #{status}, checkout_time = #{checkoutTime} " +
+            "where number = #{number}")
+    void updateByOrderNumber(Orders orders);
 }
