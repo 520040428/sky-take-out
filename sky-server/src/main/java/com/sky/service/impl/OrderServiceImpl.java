@@ -279,6 +279,7 @@ public class OrderServiceImpl implements OrderService {
         Orders orders = orderMapper.getById(orderId);
 
         //校验订单是否存在
+        //不存在抛出异常
         if(orders == null){
             throw new OrderBusinessException(MessageConstant.ORDER_NOT_FOUND);
         }
