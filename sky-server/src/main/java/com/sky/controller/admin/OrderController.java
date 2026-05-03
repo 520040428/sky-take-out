@@ -12,13 +12,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-/**
- * @author Jing Beier
- * @version 1.0
- * @function
- * @date
- */
-@RestController("adiminOrderController")
+
+@RestController("adiminOrd/**\n" +
+        " * @author Jing Beier\n" +
+        " * @version 1.0\n" +
+        " * @function\n" +
+        " * @date\n" +
+        " */erController")
 @RequestMapping("/admin/order")
 @Api(tags = "管理端订单管理")
 @Slf4j

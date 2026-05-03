@@ -73,4 +73,20 @@
         </where>
         order by order_time desc
     </select>
+
+<!--    这里爆红是因为我们map传参，IDEA静态检查不识别-->
+    <select id="sumByMap" resultType="java.lang.Double">
+        select sum(amount) from orders
+        <where>
+            <if test="begin != null">
+                and order_time &gt; #{begin}
+            </if>
+            <if test="end != null">
+                and order_time &lt; #{end}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+        </where>
+    </select>
 </mapper>
