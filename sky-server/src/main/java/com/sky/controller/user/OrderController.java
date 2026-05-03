@@ -59,6 +59,13 @@ public class OrderController {
         return Result.success(orderPaymentVO);
     }
 
+    /**
+     * 历史订单查询
+     * @param page
+     * @param pageSize
+     * @param status
+     * @return
+     */
     @GetMapping("/historyOrders")
     @ApiOperation("历史订单查询")
     public Result<PageResult> list(int page, int pageSize, Integer status){
@@ -69,6 +76,11 @@ public class OrderController {
     }
 
 
+    /**
+     * 订单详情
+     * @param orderId
+     * @return
+     */
     @GetMapping("/orderDetail/{orderId}")
     @ApiOperation("订单详情")
     public Result<OrderVO> details(@PathVariable Long orderId){
@@ -87,12 +99,30 @@ public class OrderController {
 
     }
 
+    /**
+     * 取消订单
+     * @param orderId
+     * @return
+     */
     @PutMapping("cancel/{orderId}")
     @ApiOperation("取消订单")
     public Result cancel(@PathVariable Long orderId){
         log.info("取消订单，参数：{}", orderId);
 
         orderService.userCancelById(orderId);
+        return Result.success();
+    }
+
+    /**
+     * 用户催单
+     * @param id
+     * @return
+     */
+    @GetMapping("/reminder/{id}")
+    @ApiOperation("用户催单")
+    public Result reminder(@PathVariable("id") Long id){
+        orderService.reminder(id);
+
         return Result.success();
     }
 }
