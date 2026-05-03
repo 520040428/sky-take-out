@@ -5,6 +5,8 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
+import java.util.Map;
+
 /**
  * @author Jing Beier
  * @version 1.0
@@ -37,4 +39,11 @@ public interface UserMapper {
      */
     @Select("select * from user where id = #{userId}")
     User getById(Long userId);
+
+    /**
+     * 根据动态条件查询用户数据
+     * @param map
+     * @return
+     */
+    Integer countByMap(Map map);
 }
