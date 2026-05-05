@@ -69,4 +69,9 @@ sky:
     notifuUrl: ${sky.wechat.notifuUrl}
     refundNotifyUrl: ${sky.wechat.refundNotifyUrl}
 
+  baidu:
+    ak: ${sky.baidu.ak}
+  shop:
+    address: ${sky.shop.adress}
+
 
